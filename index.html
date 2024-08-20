@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blue Protocol Damage Calculator</title>
+    <script defer src="script.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-900 text-white p-4">
+    <div
+      class="container mx-auto max-w-md p-4 bg-gray-800 rounded-lg shadow-md"
+    >
+      <h1 class="text-center text-2xl font-bold mb-4">
+        Blue Protocol Damage Calculator
+      </h1>
+
+      <!-- Visual Formula Display -->
+      <div id="formula" class="text-sm bg-gray-700 p-4 rounded mb-4">
+        <p class="text-center">
+          Total Damage = Round[(<span id="atk-value">ATK</span> +
+          <span id="elemental-atk-value">Elemental ATK</span> + √<span
+            id="atk-value-sqrt"
+            >ATK</span
+          >
+          > * <span id="elemental-atk-value-2">Elemental ATK</span> -
+          <span id="enemy-def-value">Enemy DEF</span> ÷ 2) ×
+          <span id="skill-damage-value">Total Skill Damage</span> × (1 +
+          <span id="crit-damage-value">Crit Damage</span>) ×
+          <span id="elemental-resistance-value">Elemental Resistance</span> ×
+          Rand(0.97 ~ 1.03) ×
+          <span id="various-modifiers-value">Various Modifiers</span> ×
+          <span id="decimal-modifiers-value">Decimal Modifiers</span>]
+        </p>
+      </div>
+
+      <!-- Main Inputs Section -->
+      <div class="mb-6 p-4 rounded-lg border border-gray-600">
+        <h2 class="text-xl font-semibold mb-4">Main Damage Inputs</h2>
+
+        <!-- ATK Input -->
+        <div class="mb-4">
+          <label for="atk" class="block font-semibold">ATK:</label>
+          <input
+            type="number"
+            id="atk"
+            value="50"
+            class="w-full p-2 rounded bg-gray-700 border border-gray-600"
+          />
+        </div>
+
+        <!-- Elemental ATK Input -->
+        <div class="mb-4">
+          <label for="elemental-atk" class="block font-semibold"
+            >Elemental ATK:</label
+          >
+          <input
+            type="number"
+            id="elemental-atk"
+            value="5"
+            class="w-full p-2 rounded bg-gray-700 border border-gray-600"
+          />
+        </div>
+
+        <!-- Enemy DEF Input -->
+        <div class="mb-4">
+          <label for="enemy-def" class="block font-semibold">Enemy DEF:</label>
+          <input
+            type="number"
+            id="enemy-def"
+            value="10"
+            class="w-full p-2 rounded bg-gray-700 border border-gray-600"
+          />
+        </div>
+
+        <!-- Skill Damage Input -->
+        <div class="mb-4">
+          <label for="skill-damage" class="block font-semibold"
+            >Total Skill Damage:</label
+          >
+          <input
+            type="number"
+            id="skill-damage"
+            value="20"
+            class="w-full p-2 rounded bg-gray-700 border border-gray-600"
+          />
+        </div>
+
+        <!-- Crit Damage Input -->
+        <div class="mb-4">
+          <label for="crit-damage" class="block font-semibold"
+            >Crit Damage (%):</label
+          >
+          <input
+            type="number"
+            id="crit-damage"
+            value="5"
+            class="w-full p-2 rounded bg-gray-700 border border-gray-600"
+          />
+        </div>
+
+        <!-- Elemental Resistance Input -->
+        <div class="mb-4">
+          <label for="elemental-resistance" class="block font-semibold"
+            >Elemental Resistance (%):</label
+          >
+          <input
+            type="number"
+            id="elemental-resistance"
+            value="10"
+            class="w-full p-2 rounded bg-gray-700 border border-gray-600"
+          />
+        </div>
+      </div>
+
+      <!-- Optional Modifiers Section -->
+      <div class="mb-6 p-4 rounded-lg border border-gray-600">
+        <h2 class="text-xl font-semibold mb-4">Optional Modifiers</h2>
+
+        <!-- Known Various Modifiers Multi-Select Dropdown -->
+        <div class="mb-4">
+          <label
+            for="known-various-modifiers"
+            class="block font-semibold text-gray-400 italic"
+            >Preset Various Modifiers (Optional):</label
+          >
+          <select
+            id="known-various-modifiers"
+            multiple
+            class="w-full p-2 rounded bg-gray-700 border border-gray-600 mt-2"
+          >
+            <option value="1" selected>None</option>
+            <option value="1.1">Skill Buff (10% increase)</option>
+            <option value="1.2">Weapon Passive (20% increase)</option>
+            <option value="1.3">Party Buff (30% increase)</option>
+          </select>
+        </div>
+
+        <!-- Manual Entry for Various Modifiers -->
+        <div class="mb-4">
+          <label
+            for="various-modifiers"
+            class="block font-semibold text-gray-400 italic"
+            >Custom Various Modifiers (Optional):</label
+          >
+          <input
+            type="number"
+            id="various-modifiers"
+            value="1"
+            placeholder="Enter custom modifier (e.g., 1.25)"
+            class="w-full p-2 rounded bg-gray-700 border border-gray-600 mt-2"
+          />
+        </div>
+
+        <!-- Known Decimal Modifiers Multi-Select Dropdown -->
+        <div class="mb-4">
+          <label
+            for="known-decimal-modifiers"
+            class="block font-semibold text-gray-400 italic"
+            >Preset Decimal Modifiers (Optional):</label
+          >
+          <select
+            id="known-decimal-modifiers"
+            multiple
+            class="w-full p-2 rounded bg-gray-700 border border-gray-600 mt-2"
+          >
+            <option value="1" selected>None</option>
+            <option value="1.15">Elemental Advantage (15% increase)</option>
+            <option value="0.85">Elemental Disadvantage (15% decrease)</option>
+            <option value="1.1">Environmental Boost (10% increase)</option>
+          </select>
+        </div>
+
+        <!-- Manual Entry for Decimal Modifiers -->
+        <div class="mb-4">
+          <label
+            for="decimal-modifiers"
+            class="block font-semibold text-gray-400 italic"
+            >Custom Decimal Modifiers (Optional):</label
+          >
+          <input
+            type="number"
+            id="decimal-modifiers"
+            value="1"
+            placeholder="Enter custom modifier (e.g., 1.05)"
+            class="w-full p-2 rounded bg-gray-700 border border-gray-600 mt-2"
+          />
+        </div>
+      </div>
+
+      <!-- Damage Output -->
+      <div id="damage-output" class="mt-4 text-center">
+        <p class="text-lg font-semibold">Damage Range:</p>
+        <p id="min-damage" class="text-md">Min:</p>
+        <p id="max-damage" class="text-md">Max:</p>
+        <p id="avg-damage" class="text-md">Average:</p>
+        <button
+          id="attack-button"
+          class="mt-4 bg-green-600 hover:bg-green-500 text-white py-2 px-4 rounded"
+        >
+          Attack
+        </button>
+        <p id="random-damage" class="mt-4 text-lg font-semibold"></p>
+      </div>
+    </div>
+  </body>
+</html>
